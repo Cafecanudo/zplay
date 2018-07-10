@@ -8,6 +8,9 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import zup.com.br.zplay.R;
+/**
+ * Autor Wellton
+ */
 
 public class DetailsMovieActivity extends SupportActivity {
 
