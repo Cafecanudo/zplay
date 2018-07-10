@@ -9,6 +9,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import zup.com.br.zplay.R;
 
+/**
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+**/
 public class DetailsMovieActivity extends SupportActivity {
 
     @BindView(R.id.imagem)
