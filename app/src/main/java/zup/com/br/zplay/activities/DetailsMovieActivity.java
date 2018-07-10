@@ -12,6 +12,9 @@ import zup.com.br.zplay.R;
  * Autor Wellton
  */
 
+/**
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+**/
 public class DetailsMovieActivity extends SupportActivity {
 
     @BindView(R.id.imagem)
