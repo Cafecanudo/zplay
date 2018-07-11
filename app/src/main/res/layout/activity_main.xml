@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_main"
@@ -9,6 +10,7 @@
 
     <!--Toolbar custom-->
     <LinearLayout
+        android:id="@+id/toolbarCustom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="15dp"
@@ -33,7 +35,10 @@
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:background="@drawable/bg_input_search_main"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
             android:hint="Pesquisar"
+            android:imeOptions="actionSearch"
             android:padding="8dp"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
@@ -48,6 +53,16 @@
             android:src="@drawable/ic_search" />
 
         <ImageButton
+            android:id="@+id/btnExitSearch"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_input_screen_login"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_times"
+            android:visibility="gone" />
+
+        <ImageButton
             android:id="@+id/btnImgAdd"
             android:layout_width="40dp"
             android:layout_height="match_parent"
@@ -59,51 +74,40 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="top">
+        android:layout_marginTop="55dp"
+        android:gravity="top"
+        android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/noFoundFileText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
-            <LinearLayout
+            android:gravity="center"
+            android:visibility="gone">
+
+            <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_exclamation_triangle" />
 
-                <ProgressBar
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:visibility="gone"
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_exclamation_triangle" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Você não possui filmes cadastrados!"
-                    android:textColor="#FFF"
-                    android:textSize="14dp" />
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:text="@string/no_data_saved"
+                android:layout_marginTop="20dp"
+                android:textColor="#FFF"
+                android:textSize="14dp" />
 
         </LinearLayout>
 
-         <android.support.v7.widget.RecyclerView
-             android:visibility="gone"
-             android:id="@+id/listMovie"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/listMovie"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

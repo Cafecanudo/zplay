@@ -1,13 +1,12 @@
-package zup.com.br.zplay.models;
+package zup.com.br.zplay.services.dtos;
 
 import java.io.Serializable;
 
 import lombok.Data;
 
 @Data
-public class Rating implements Serializable {
+public class RatingDTO implements Serializable {
 
     private String source;
     private String value;
-
 }

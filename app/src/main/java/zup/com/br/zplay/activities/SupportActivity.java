@@ -1,12 +1,14 @@
 package zup.com.br.zplay.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
+import zup.com.br.zplay.entities.DaoSession;
 
 public abstract class SupportActivity extends AppCompatActivity {
+
+    private DaoSession daoSession;
 
     /**
      * Retorno o ID do layout
@@ -28,7 +30,13 @@ public abstract class SupportActivity extends AppCompatActivity {
         setContentView(layoutID());
         ButterKnife.bind(this);
 
+
+        this.daoSession = ((App) getApplication()).getDaoSession();
         this.inicializar(savedInstanceState);
+    }
+
+    public DaoSession getDaoSession() {
+        return daoSession;
     }
 
 }

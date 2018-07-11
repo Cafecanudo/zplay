@@ -45,19 +45,16 @@ public class SplashActivity extends SupportActivity {
     }
 
     private ActivityOptionsCompat criandoObjetoTransicao() {
-        final Pair<View, String> imgZPlayLogoPair = Pair.create((View) imgZPlayLogo, imgZPlayLogo.getTransitionName());
-        Pair<View, String> imgZPlayNamePair = Pair.create((View) imgZPlayName, imgZPlayName.getTransitionName());
+        Pair<View, String> imgZPlayLogoPair = Pair.create(imgZPlayLogo, imgZPlayLogo.getTransitionName());
+        Pair<View, String> imgZPlayNamePair = Pair.create(imgZPlayName, imgZPlayName.getTransitionName());
         return ActivityOptionsCompat.makeSceneTransitionAnimation(this, imgZPlayLogoPair, imgZPlayNamePair);
     }
 
     private void ativarSplash() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent i = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(i, criandoObjetoTransicao().toBundle());
-                finish();
-            }
+        new Handler().postDelayed(() -> {
+            Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+            startActivity(i, criandoObjetoTransicao().toBundle());
+            finish();
         }, TEMPO_SPLASH);
     }
 }

@@ -5,14 +5,14 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import zup.com.br.zplay.models.MovieSearch;
+import zup.com.br.zplay.services.dtos.MovieSearchDTO;
 
 public interface OmdbapiService {
 
     @GET()
-    Call<List<MovieSearch>> obterLista(@Query("s") String search);
+    Call<List<MovieSearchDTO>> obterLista(@Query("s") String search);
 
     @GET()
-    Call<MovieSearch> obterFilme(@Query("t") String imdbID);
+    Call<MovieSearchDTO> obterFilme(@Query("t") String imdbID);
 
 }

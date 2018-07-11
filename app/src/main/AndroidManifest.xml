@@ -3,6 +3,7 @@
     package="zup.com.br.zplay">
 
     <application
+        android:name=".activities.App"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/zplay_ico"
