@@ -3,6 +3,8 @@ package zup.com.br.zplay.adapters;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,14 +19,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import zup.com.br.zplay.R;
 import zup.com.br.zplay.activities.DetailsMovieActivity;
-import zup.com.br.zplay.models.Movie;
+import zup.com.br.zplay.activities.SupportActivity;
+import zup.com.br.zplay.entities.MovieEntity;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
-    private Activity activity;
-    private List<Movie> movieList;
+    private Activity          activity;
+    private List<MovieEntity> movieList;
 
-    public MovieAdapter(Activity activity, List<Movie> movieList) {
+    public MovieAdapter(SupportActivity activity, List<MovieEntity> movieList) {
         this.activity = activity;
         this.movieList = movieList;
     }
@@ -33,19 +36,19 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_movie, viewGroup, false);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                final Pair<View, String> imgZPlayLogoPair = Pair.create((View) imgZPlayLogo, imgZPlayLogo.getTransitionName());
-//                Pair<View, String> imgZPlayNamePair = Pair.create((View) imgZPlayName, imgZPlayName.getTransitionName());
-//                 ActivityOptionsCompat.makeSceneTransitionAnimation(this, imgZPlayLogoPair, imgZPlayNamePair);
+        itemView.setOnClickListener(view -> {
 
-                Intent intent = new Intent(activity, DetailsMovieActivity.class);
+            View url_post = view.findViewById(R.id.url_post);
 
-                Movie movie = movieList.get(i);
-                intent.putExtra("MOVIE_ID", movie);
-                activity.startActivity(intent);
-            }
+            Pair<View, String> url_postPair = Pair.create(url_post, url_post.getTransitionName());
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, url_postPair);
+
+            Intent intent = new Intent(activity, DetailsMovieActivity.class);
+
+            MovieEntity movie = movieList.get(i);
+            intent.putExtra("MOVIE_ID", movie.getId());
+            activity.startActivity(intent, options.toBundle());
+            activity.startActivity(intent);
         });
         ButterKnife.bind(this, itemView);
         return new MovieViewHolder(itemView);
@@ -53,15 +56,29 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int i) {
-        Movie movie = movieList.get(i);
+        MovieEntity movie = movieList.get(i);
+        if (movie.getId() != null) {
+            holder.title.setText(movie.getTitle());
+            holder.title.setBackground(null);
 
-//        holder.nome.setText(movie.getNome());
-//        holder.autor.setText(movie.getAutor());
-//        holder.ano.setText(movie.getAno());
-//        holder.sinopse.setText(movie.getSinopse());
-//        holder.tempo.setText(movie.getTempo());
+            holder.director.setText(movie.getDirector());
+            holder.director.setBackground(null);
 
+            holder.year.setText(movie.getYear());
+            holder.year.setBackground(null);
 
+            holder.plot.setText(movie.getPlot());
+            holder.plot.setBackground(null);
+
+            holder.time.setText(movie.getTime());
+            holder.time.setBackgroundResource(R.drawable.bg_item_movie_time);
+
+            for (int y = 0; y < movie.getRank(); y++) {
+                ImageView imageView = new ImageView(activity);
+                imageView.setImageResource(R.drawable.ic_star);
+                holder.rank.addView(imageView);
+            }
+        }
     }
 
     @Override
@@ -71,23 +88,26 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.imagem)
-        public ImageView imagem;
+        @BindView(R.id.progressBar)
+        public View progressBar;
 
-        @BindView(R.id.nome)
-        public TextView nome;
+        @BindView(R.id.url_post)
+        public ImageView url_post;
 
-        @BindView(R.id.autor)
-        public TextView autor;
+        @BindView(R.id.title)
+        public TextView title;
 
-        @BindView(R.id.ano)
-        public TextView ano;
+        @BindView(R.id.director)
+        public TextView director;
 
-        @BindView(R.id.sinopse)
-        public TextView sinopse;
+        @BindView(R.id.year)
+        public TextView year;
 
-        @BindView(R.id.tempo)
-        public TextView tempo;
+        @BindView(R.id.plot)
+        public TextView plot;
+
+        @BindView(R.id.time)
+        public TextView time;
 
         @BindView(R.id.rank)
         public LinearLayout rank;
