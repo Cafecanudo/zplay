@@ -2,6 +2,9 @@
     <string name="app_name">zPlay Movie</string>
     <string name="movie_exist">Já existe esse filme cadastrado!</string>
     <string name="algo_errado">Desculpe! Algo deu errado.</string>
+    <string name="registro_nao_encontrado">Registro não foi encontrado.</string>
+    <string name="algo_errado_load_image">Desculpe! Não foi possivel carregar imagem.</string>
     <string name="no_data_saved">Você não possui filmes cadastrados!</string>
+    <string name="no_found_data_search">Nenhum filme encontrado!</string>
     <string name="char_min_4">Digite no minimo 4 letras.</string>
 </resources>

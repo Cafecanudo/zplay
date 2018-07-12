@@ -68,4 +68,8 @@ dependencies {
     //Encrypt
     implementation 'net.zetetic:android-database-sqlcipher:3.5.9@aar'
 
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+
 }

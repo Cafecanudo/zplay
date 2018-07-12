@@ -2,6 +2,7 @@ package zup.com.br.zplay.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
@@ -12,6 +13,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BaseTarget;
+import com.bumptech.glide.request.target.SizeReadyCallback;
+import com.bumptech.glide.request.transition.Transition;
 
 import java.util.List;
 
@@ -37,18 +43,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_movie, viewGroup, false);
         itemView.setOnClickListener(view -> {
-
-            View url_post = view.findViewById(R.id.url_post);
-
-            Pair<View, String> url_postPair = Pair.create(url_post, url_post.getTransitionName());
-            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, url_postPair);
-
-            Intent intent = new Intent(activity, DetailsMovieActivity.class);
-
             MovieEntity movie = movieList.get(i);
-            intent.putExtra("MOVIE_ID", movie.getId());
-            activity.startActivity(intent, options.toBundle());
-            activity.startActivity(intent);
+            if (movie.getId() != null) {
+                View url_post = view.findViewById(R.id.url_post);
+                View title = view.findViewById(R.id.title);
+                View rank = view.findViewById(R.id.rank);
+
+                Pair<View, String> url_postPair = Pair.create(url_post, url_post.getTransitionName());
+                Pair<View, String> titlePair = Pair.create(title, title.getTransitionName());
+                Pair<View, String> rankPair = Pair.create(rank, rank.getTransitionName());
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
+                        url_postPair, titlePair, rankPair);
+
+                Intent intent = new Intent(activity, DetailsMovieActivity.class);
+
+                intent.putExtra("MOVIE_ID", movie.getId());
+                activity.startActivity(intent, options.toBundle());
+            }
         });
         ButterKnife.bind(this, itemView);
         return new MovieViewHolder(itemView);
@@ -72,12 +83,34 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
             holder.time.setText(movie.getTime());
             holder.time.setBackgroundResource(R.drawable.bg_item_movie_time);
+            holder.setImagePoster(movie.getUrl_post());
 
-            for (int y = 0; y < movie.getRank(); y++) {
+            for (int y = 0; y < (movie.getRank() > 5 ? 5 : movie.getRank()); y++) {
                 ImageView imageView = new ImageView(activity);
                 imageView.setImageResource(R.drawable.ic_star);
                 holder.rank.addView(imageView);
+                holder.rank.setBackground(null);
             }
+        } else {
+            holder.title.setText(null);
+            holder.title.setBackgroundResource(R.drawable.bg_sckeleton_screen);
+
+            holder.director.setText(movie.getDirector());
+            holder.director.setBackgroundResource(R.drawable.bg_sckeleton_screen);
+
+            holder.year.setText(movie.getYear());
+            holder.year.setBackgroundResource(R.drawable.bg_sckeleton_screen);
+
+            holder.plot.setText(movie.getPlot());
+            holder.plot.setBackgroundResource(R.drawable.bg_sckeleton_screen);
+
+            holder.time.setText(movie.getTime());
+            holder.time.setBackgroundResource(R.drawable.bg_sckeleton_screen);
+
+            holder.progressBar.setVisibility(View.VISIBLE);
+            holder.url_post.setVisibility(View.GONE);
+
+            holder.rank.removeAllViews();
         }
     }
 
@@ -87,6 +120,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.cardviewImage)
+        public View cardviewImage;
 
         @BindView(R.id.progressBar)
         public View progressBar;
@@ -116,5 +152,33 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             super(view);
             ButterKnife.bind(this, view);
         }
+
+        public void setImagePoster(String url_post) {
+            if (url_post != null) {
+                this.progressBar.setVisibility(View.VISIBLE);
+                this.url_post.setVisibility(View.GONE);
+                Glide.with(activity).load(url_post).into(target);
+            } else {
+                this.cardviewImage.setVisibility(View.GONE);
+            }
+        }
+
+        private BaseTarget target = new BaseTarget<BitmapDrawable>() {
+            @Override
+            public void onResourceReady(BitmapDrawable bitmap, Transition<? super BitmapDrawable> transition) {
+                url_post.setImageDrawable(bitmap);
+                progressBar.setVisibility(View.GONE);
+                url_post.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void getSize(SizeReadyCallback cb) {
+                cb.onSizeReady(SIZE_ORIGINAL, SIZE_ORIGINAL);
+            }
+
+            @Override
+            public void removeCallback(SizeReadyCallback cb) {
+            }
+        };
     }
 }

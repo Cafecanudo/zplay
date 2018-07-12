@@ -1,8 +1,8 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#206fa0</item>
-        <item name="colorPrimaryDark">#2884ba</item>
+        <item name="colorPrimary">#8b9c35</item>
+        <item name="colorPrimaryDark">#8b9c35</item>
         <item name="colorAccent">#ffffff</item>
         <item name="android:windowBackground">@drawable/background_default</item>
         <item name="android:windowContentTransitions">true</item>
