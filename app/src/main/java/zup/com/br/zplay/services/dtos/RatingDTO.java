@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 public class RatingDTO implements Serializable {
 
-    private String source;
-    private String value;
+    private String Source;
+    private String Value;
 }
