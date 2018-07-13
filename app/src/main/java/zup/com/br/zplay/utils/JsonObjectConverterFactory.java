@@ -3,7 +3,6 @@ package zup.com.br.zplay.utils;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
@@ -22,12 +21,9 @@ public class JsonObjectConverterFactory extends Converter.Factory {
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
         if (JsonObject.class.equals(type)) {
-            return new Converter<ResponseBody, JsonObject>() {
-                @Override
-                public JsonObject convert(ResponseBody value) throws IOException {
-                    JsonParser parser = new JsonParser();
-                    return parser.parse(value.string()).getAsJsonObject();
-                }
+            return (Converter<ResponseBody, JsonObject>) value -> {
+                JsonParser parser = new JsonParser();
+                return parser.parse(value.string()).getAsJsonObject();
             };
         }
         return null;
@@ -36,12 +32,7 @@ public class JsonObjectConverterFactory extends Converter.Factory {
     @Override
     public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
         if (JsonObject.class.equals(type)) {
-            return new Converter<String, RequestBody>() {
-                @Override
-                public RequestBody convert(String value) throws IOException {
-                    return RequestBody.create(MediaType.parse("application/json"), value);
-                }
-            };
+            return (Converter<String, RequestBody>) value -> RequestBody.create(MediaType.parse("application/json"), value);
         }
         return null;
     }

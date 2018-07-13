@@ -126,7 +126,10 @@ public class DetailsMovieActivity extends SupportActivity {
         this.actors.setText(movie.getActors());
         this.actors.setBackground(null);
 
-        for (int y = 0; y < (movie.getRank() > 5 ? 5 : movie.getRank()); y++) {
+        String rating = movie.getRank().replaceAll("[^0-9]", "");
+        int rank = !"".equals(rating) ? Integer.valueOf(rating) : 0;
+
+        for (int y = 0; y < (rank > 5 ? 5 : rank); y++) {
             ImageView imageView = new ImageView(this);
             imageView.setImageResource(R.drawable.ic_star);
             this.rank.addView(imageView);
@@ -137,7 +140,7 @@ public class DetailsMovieActivity extends SupportActivity {
     }
 
     private void setImagePoster(String url_post) {
-        if (url_post != null) {
+        if (url_post != null && !url_post.equals("N/A")) {
             this.progressBar.setVisibility(View.VISIBLE);
             this.url_post.setVisibility(View.GONE);
             Glide.with(this).load(url_post).into(target);

@@ -11,18 +11,16 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import net.sqlcipher.database.SQLiteConstraintException;
-
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import zup.com.br.zplay.R;
 import zup.com.br.zplay.adapters.MovieAdapter;
+import zup.com.br.zplay.dialogs.DialogSearch;
 import zup.com.br.zplay.entities.MovieEntity;
 import zup.com.br.zplay.entities.MovieEntityDao;
 
@@ -147,12 +145,6 @@ public class MainActivity extends SupportActivity {
                 noFoundFileText.setVisibility(View.VISIBLE);
             }
         }, 3000);
-
-//        //OmdbapiService omdbapiService = AppClient.getClient().create(OmdbapiService.class);
-//        //Call<JsonObject> consultaVeiculo = veiculoService.consultarVeiculoPublico(editPlacaLetra.getText().toString() +
-//        //                    editPlacaNumero.getText().toString(), editRenavam.getText().toString());
-//
-//
     }
 
     private void addSckeletonScreen() {
@@ -195,34 +187,6 @@ public class MainActivity extends SupportActivity {
     }
 
     private void adicionarNovoFilme() {
-        try {
-            MovieEntity movie = new MovieEntity();
-            movie.setImdbId("tt0083907");
-            movie.setType("movie");
-            movie.setProduction("New Line Cinema");
-            movie.setTitle("The Evil Dead");
-            movie.setYear("1981");
-            movie.setTime("85 min");
-            movie.setDirector("Sam Raimi");
-            movie.setWriter("Sam Raimi");
-            movie.setActors("Bruce Campbell, Ellen Sandweiss, Richard DeManincor, Betsy Baker");
-            movie.setUrl_post("https://m.media-amazon.com/images/M/MV5BODc2MmVjZmUtNjAzMS00MDNiLWIyM2YtOGEzMjg0YjRhMzRmXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg");
-            movie.setPlot("Five friends travel to a cabin in the woods, where they unknowingly release flesh-possessing demons.");
-            movie.setScore(70);
-            movie.setRank(7.5F);
-            movie.setVotes(160895F);
-            movie.setGenre("Horror");
-            movie.setLanguage("English");
-            movie.setDataCadastro(new Date());
-
-            movie.setId(this.getDaoSession().getMovieEntityDao().insert(movie));
-            this.movieList.add(0, movie);
-
-            movieAdapter.notifyDataSetChanged();
-        } catch (SQLiteConstraintException e) {
-            Snackbar.make(coordinatorLayout, R.string.movie_exist, Snackbar.LENGTH_LONG).show();
-        } catch (Exception ex) {
-            Snackbar.make(coordinatorLayout, R.string.algo_errado, Snackbar.LENGTH_LONG).show();
-        }
+        DialogSearch.show(this).setOnDismissListener(dialogInterface -> this.prepareList());
     }
 }

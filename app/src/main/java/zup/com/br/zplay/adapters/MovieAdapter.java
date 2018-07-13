@@ -85,7 +85,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             holder.time.setBackgroundResource(R.drawable.bg_item_movie_time);
             holder.setImagePoster(movie.getUrl_post());
 
-            for (int y = 0; y < (movie.getRank() > 5 ? 5 : movie.getRank()); y++) {
+            String rating = movie.getRank().replaceAll("[^0-9]", "");
+            int rank = !"".equals(rating) ? Integer.valueOf(rating) : 0;
+
+            for (int y = 0; y < (rank > 5 ? 5 : rank); y++) {
                 ImageView imageView = new ImageView(activity);
                 imageView.setImageResource(R.drawable.ic_star);
                 holder.rank.addView(imageView);
@@ -95,16 +98,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             holder.title.setText(null);
             holder.title.setBackgroundResource(R.drawable.bg_sckeleton_screen);
 
-            holder.director.setText(movie.getDirector());
+            holder.director.setText(null);
             holder.director.setBackgroundResource(R.drawable.bg_sckeleton_screen);
 
-            holder.year.setText(movie.getYear());
+            holder.year.setText(null);
             holder.year.setBackgroundResource(R.drawable.bg_sckeleton_screen);
 
-            holder.plot.setText(movie.getPlot());
+            holder.plot.setText(null);
             holder.plot.setBackgroundResource(R.drawable.bg_sckeleton_screen);
 
-            holder.time.setText(movie.getTime());
+            holder.time.setText(null);
             holder.time.setBackgroundResource(R.drawable.bg_sckeleton_screen);
 
             holder.progressBar.setVisibility(View.VISIBLE);

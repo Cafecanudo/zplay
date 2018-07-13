@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 public class MovieSearchDTO implements Serializable {
 
-    private String title;
-    private String year;
+    private String Title;
+    private String Year;
     private String imdbID;
-    private String type;
-    private String poster;
+    private String Type;
+    private String Poster;
 }

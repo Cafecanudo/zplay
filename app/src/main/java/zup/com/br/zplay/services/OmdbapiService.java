@@ -1,18 +1,19 @@
 package zup.com.br.zplay.services;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import zup.com.br.zplay.services.dtos.MovieSearchDTO;
+import zup.com.br.zplay.services.dtos.DetailMovieDTO;
+import zup.com.br.zplay.services.dtos.SearchMovieDTO;
+
+import static zup.com.br.zplay.utils.AppClient.API_KEY;
 
 public interface OmdbapiService {
 
-    @GET()
-    Call<List<MovieSearchDTO>> obterLista(@Query("s") String search);
+    @GET("?apikey=" + API_KEY)
+    Call<SearchMovieDTO> obterListaPagina(@Query("s") String search, @Query("page") int page);
 
-    @GET()
-    Call<MovieSearchDTO> obterFilme(@Query("t") String imdbID);
+    @GET("?apikey=" + API_KEY)
+    Call<DetailMovieDTO> obterFilmePorID(@Query("i") String imdbID);
 
 }
