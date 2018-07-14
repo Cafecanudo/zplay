@@ -42,27 +42,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_movie, viewGroup, false);
-        itemView.setOnClickListener(view -> {
-            MovieEntity movie = movieList.get(i);
-            if (movie.getId() != null) {
-                View url_post = view.findViewById(R.id.url_post);
-                View title = view.findViewById(R.id.title);
-                View rank = view.findViewById(R.id.rank);
-
-                Pair<View, String> url_postPair = Pair.create(url_post, url_post.getTransitionName());
-                Pair<View, String> titlePair = Pair.create(title, title.getTransitionName());
-                Pair<View, String> rankPair = Pair.create(rank, rank.getTransitionName());
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
-                        url_postPair, titlePair, rankPair);
-
-                Intent intent = new Intent(activity, DetailsMovieActivity.class);
-
-                intent.putExtra("MOVIE_ID", movie.getId());
-                activity.startActivity(intent, options.toBundle());
-            }
-        });
         ButterKnife.bind(this, itemView);
-        return new MovieViewHolder(itemView);
+        return new MovieViewHolder(movieList.get(i), itemView);
     }
 
     @Override
@@ -122,7 +103,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return movieList.size();
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder {
+    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.cardviewImage)
         public View cardviewImage;
@@ -151,9 +132,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         @BindView(R.id.rank)
         public LinearLayout rank;
 
-        public MovieViewHolder(View view) {
+        private MovieEntity movie;
+
+        public MovieViewHolder(MovieEntity movie, View view) {
             super(view);
+            this.movie = movie;
             ButterKnife.bind(this, view);
+
+            view.setOnClickListener(this);
         }
 
         public void setImagePoster(String url_post) {
@@ -183,5 +169,25 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             public void removeCallback(SizeReadyCallback cb) {
             }
         };
+
+        @Override
+        public void onClick(View view) {
+            if (movie.getId() != null) {
+                View url_post = view.findViewById(R.id.url_post);
+                View title = view.findViewById(R.id.title);
+                View rank = view.findViewById(R.id.rank);
+
+                Pair<View, String> url_postPair = Pair.create(url_post, url_post.getTransitionName());
+                Pair<View, String> titlePair = Pair.create(title, title.getTransitionName());
+                Pair<View, String> rankPair = Pair.create(rank, rank.getTransitionName());
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
+                        url_postPair, titlePair, rankPair);
+
+                Intent intent = new Intent(activity, DetailsMovieActivity.class);
+
+                intent.putExtra("MOVIE_ID", movie.getId());
+                activity.startActivity(intent, options.toBundle());
+            }
+        }
     }
 }

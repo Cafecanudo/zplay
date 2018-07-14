@@ -37,9 +37,8 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_movie_search_omdbapi, viewGroup, false);
-        itemView.setOnClickListener(view -> DialogMovieAdd.show(movieList.get(i).getImdbID(), activity));
         ButterKnife.bind(this, itemView);
-        return new MovieViewHolder(itemView);
+        return new MovieViewHolder(movieList.get(i), itemView);
     }
 
     @Override
@@ -76,7 +75,7 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
         return movieList.size();
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder {
+    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.cardviewImage)
         public View cardviewImage;
@@ -96,9 +95,14 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
         @BindView(R.id.year)
         public TextView year;
 
-        public MovieViewHolder(View view) {
+        private MovieSearchDTO movie;
+
+        public MovieViewHolder(MovieSearchDTO movie, View view) {
             super(view);
+            this.movie = movie;
             ButterKnife.bind(this, view);
+
+            view.setOnClickListener(this);
         }
 
         public void setImagePoster(String url_post) {
@@ -128,5 +132,10 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
             public void removeCallback(SizeReadyCallback cb) {
             }
         };
+
+        @Override
+        public void onClick(View view) {
+            DialogMovieAdd.show(movie.getImdbID(), activity);
+        }
     }
 }
