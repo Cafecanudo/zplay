@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "51128735428",
+    "firebase_url": "https://z-play.firebaseio.com",
+    "project_id": "z-play",
+    "storage_bucket": "z-play.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51128735428:android:153d0f0f2a87b963",
+        "android_client_info": {
+          "package_name": "zup.com.br.zplay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "51128735428-lenio0tqc4r2e6n1ritpf66eifvbdvdg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "zup.com.br.zplay",
+            "certificate_hash": "e0711d1ded6bf0d5a8ce5cb3beb138f8c4e8e2a7"
+          }
+        },
+        {
+          "client_id": "51128735428-khd9vmlooknj7po477j8sqbpqq4jmta6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdKw2ONcfSn35se27Ndw4feaoK3ktlJl0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "51128735428-khd9vmlooknj7po477j8sqbpqq4jmta6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
