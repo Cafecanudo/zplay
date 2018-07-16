@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">zPlay Movie</string>
     <string name="movie_exist">Já existe esse filme cadastrado!</string>
+    <string name="login_cancelado">Login cancelado.</string>
     <string name="algo_errado">Desculpe! Algo deu errado.</string>
     <string name="algo_errado_message">Desculpe! Algo deu errado: %s.</string>
     <string name="registro_nao_encontrado">Registro não foi encontrado.</string>
@@ -12,4 +13,8 @@
     <string name="toque_cancelar">Toque cancelar</string>
     <string name="conexao_lenta">Sua conexão esta lenta, tente novamente!</string>
     <string name="filme_added">Filme adicionado com sucesso!</string>
+
+    <string name="facebook_app_id">1464001807065457</string>
+    <string name="fb_login_protocol_scheme">fb1464001807065457</string>
+
 </resources>

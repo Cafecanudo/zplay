@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import zup.com.br.zplay.R;
 import zup.com.br.zplay.adapters.MovieAdapter;
+import zup.com.br.zplay.authentication.AuthLogin;
 import zup.com.br.zplay.dialogs.DialogSearch;
 import zup.com.br.zplay.entities.MovieEntity;
 import zup.com.br.zplay.entities.MovieEntityDao;
@@ -170,9 +171,7 @@ public class MainActivity extends SupportActivity {
                 break;
             }
             case R.id.btnImgUser: {
-                this.movieEntityDao.deleteAll();
-                this.movieList.clear();
-                movieAdapter.notifyDataSetChanged();
+                AuthLogin.logout(this);
                 break;
             }
         }

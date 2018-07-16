@@ -15,6 +15,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -22,6 +23,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    dexOptions {
+        javaMaxHeapSize "4g" //specify the heap size for the dex process
     }
     compileOptions {
         targetCompatibility 1.8
@@ -75,5 +79,11 @@ dependencies {
     //Animation
     implementation 'com.nightonke:wowoviewpager:2.0.0'
 
+    //Firebase authentication
+    implementation 'com.google.firebase:firebase-core:15.0.0'
+    implementation 'com.google.firebase:firebase-auth:15.0.0'
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation 'com.google.android.gms:play-services-auth:15.0.0'
 
 }
+apply plugin: 'com.google.gms.google-services'
