@@ -1,8 +1,11 @@
 package zup.com.br.zplay.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +27,7 @@ import zup.com.br.zplay.authentication.AuthLogin;
 import zup.com.br.zplay.dialogs.DialogSearch;
 import zup.com.br.zplay.entities.MovieEntity;
 import zup.com.br.zplay.entities.MovieEntityDao;
+import zup.com.br.zplay.utils.RecyclerItemClickListener;
 
 public class MainActivity extends SupportActivity {
 
@@ -67,6 +71,25 @@ public class MainActivity extends SupportActivity {
         listMovie.setLayoutManager(mLayoutManager);
         listMovie.setItemAnimator(new DefaultItemAnimator());
         listMovie.setAdapter(movieAdapter);
+
+        listMovie.addOnItemTouchListener(new RecyclerItemClickListener(this, (view, position) -> {
+            MovieEntity movie = movieList.get(position);
+
+            View url_post = view.findViewById(R.id.url_post);
+            View title = view.findViewById(R.id.title);
+            View rank = view.findViewById(R.id.rank);
+
+            Pair<View, String> url_postPair = Pair.create(url_post, url_post.getTransitionName());
+            Pair<View, String> titlePair = Pair.create(title, title.getTransitionName());
+            Pair<View, String> rankPair = Pair.create(rank, rank.getTransitionName());
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                    url_postPair, titlePair, rankPair);
+
+            Intent intent = new Intent(this, DetailsMovieActivity.class);
+
+            intent.putExtra("MOVIE_ID", movie.getId());
+            startActivity(intent, options.toBundle());
+        }));
 
         this.movieEntityDao = this.getDaoSession().getMovieEntityDao();
 

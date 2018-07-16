@@ -20,7 +20,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import zup.com.br.zplay.R;
 import zup.com.br.zplay.activities.SupportActivity;
-import zup.com.br.zplay.dialogs.DialogMovieAdd;
 import zup.com.br.zplay.services.dtos.MovieSearchDTO;
 
 public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.MovieViewHolder> {
@@ -38,7 +37,7 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_movie_search_omdbapi, viewGroup, false);
         ButterKnife.bind(this, itemView);
-        return new MovieViewHolder(movieList.get(i), itemView);
+        return new MovieViewHolder(itemView);
     }
 
     @Override
@@ -75,7 +74,7 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
         return movieList.size();
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MovieViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.cardviewImage)
         public View cardviewImage;
@@ -95,14 +94,9 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
         @BindView(R.id.year)
         public TextView year;
 
-        private MovieSearchDTO movie;
-
-        public MovieViewHolder(MovieSearchDTO movie, View view) {
+        public MovieViewHolder(View view) {
             super(view);
-            this.movie = movie;
             ButterKnife.bind(this, view);
-
-            view.setOnClickListener(this);
         }
 
         public void setImagePoster(String url_post) {
@@ -132,10 +126,5 @@ public class SearchMovieAdapter extends RecyclerView.Adapter<SearchMovieAdapter.
             public void removeCallback(SizeReadyCallback cb) {
             }
         };
-
-        @Override
-        public void onClick(View view) {
-            DialogMovieAdd.show(movie.getImdbID(), activity);
-        }
     }
 }

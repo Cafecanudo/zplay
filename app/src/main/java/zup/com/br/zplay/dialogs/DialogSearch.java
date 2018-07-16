@@ -30,6 +30,7 @@ import zup.com.br.zplay.services.OmdbapiService;
 import zup.com.br.zplay.services.dtos.MovieSearchDTO;
 import zup.com.br.zplay.services.dtos.SearchMovieDTO;
 import zup.com.br.zplay.utils.AppClient;
+import zup.com.br.zplay.utils.RecyclerItemClickListener;
 
 public class DialogSearch extends Dialog {
 
@@ -86,8 +87,6 @@ public class DialogSearch extends Dialog {
         View view = activity.getLayoutInflater().inflate(R.layout.dialog_seach, null);
         setContentView(view);
 
-        //getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
         ButterKnife.bind(this, view);
 
         this.movieSearchDTOList = new ArrayList<>();
@@ -99,6 +98,8 @@ public class DialogSearch extends Dialog {
         listMovie.setLayoutManager(mLayoutManager);
         listMovie.setItemAnimator(new DefaultItemAnimator());
         listMovie.setAdapter(searchMovieAdapter);
+
+        listMovie.addOnItemTouchListener(new RecyclerItemClickListener(activity, (_view, position) -> DialogMovieAdd.show(movieSearchDTOList.get(position).getImdbID(), activity)));
     }
 
     public static DialogSearch show(@NonNull SupportActivity activity) {

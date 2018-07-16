@@ -1,11 +1,8 @@
 package zup.com.br.zplay.adapters;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +21,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import zup.com.br.zplay.R;
-import zup.com.br.zplay.activities.DetailsMovieActivity;
 import zup.com.br.zplay.activities.SupportActivity;
 import zup.com.br.zplay.entities.MovieEntity;
 
@@ -43,7 +39,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_movie, viewGroup, false);
         ButterKnife.bind(this, itemView);
-        return new MovieViewHolder(movieList.get(i), itemView);
+        return new MovieViewHolder(itemView);
     }
 
     @Override
@@ -103,7 +99,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return movieList.size();
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MovieViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.cardviewImage)
         public View cardviewImage;
@@ -132,14 +128,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         @BindView(R.id.rank)
         public LinearLayout rank;
 
-        private MovieEntity movie;
-
-        public MovieViewHolder(MovieEntity movie, View view) {
+        public MovieViewHolder(View view) {
             super(view);
-            this.movie = movie;
             ButterKnife.bind(this, view);
-
-            view.setOnClickListener(this);
         }
 
         public void setImagePoster(String url_post) {
@@ -169,25 +160,5 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             public void removeCallback(SizeReadyCallback cb) {
             }
         };
-
-        @Override
-        public void onClick(View view) {
-            if (movie.getId() != null) {
-                View url_post = view.findViewById(R.id.url_post);
-                View title = view.findViewById(R.id.title);
-                View rank = view.findViewById(R.id.rank);
-
-                Pair<View, String> url_postPair = Pair.create(url_post, url_post.getTransitionName());
-                Pair<View, String> titlePair = Pair.create(title, title.getTransitionName());
-                Pair<View, String> rankPair = Pair.create(rank, rank.getTransitionName());
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
-                        url_postPair, titlePair, rankPair);
-
-                Intent intent = new Intent(activity, DetailsMovieActivity.class);
-
-                intent.putExtra("MOVIE_ID", movie.getId());
-                activity.startActivity(intent, options.toBundle());
-            }
-        }
     }
 }
